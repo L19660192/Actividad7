@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizador de Cuenta Regresiva</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        /* Estilo del título */
+        h1 {
+            color: #333;
+            margin-bottom: 20px; /* Espacio debajo del título */
+        }
+
+        /* Estilo del contador */
+        #contador {
+            font-size: 48px;
+            font-weight: bold;
+            color: #007BFF; /* Color azul para el contador */
+        }
+
+        /* Estilo del botón */
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px; /* Espacio encima del botón */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+        }
+
+        /* Estilo de la alerta */
+        .alert {
+            color: #ff69b4; /* Color rosa para la alerta */
+            font-size: 18px;
+            margin-top: 20px; /* Espacio encima de la alerta */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Temporizador</h1>
+    <p>Tiempo restante: <span id="contador">50</span> segundos</p>
+
+    <!-- Botón para iniciar el temporizador -->
+    <button onclick="iniciarTemporizador()">Iniciar Temporizador</button>
+    <p class="alert" id="alerta" style="display:none;"></p>
+
+    <script>
+        let tiempo = 50;  // Tiempo inicial
+        let intervalo;     // Variable para almacenar el intervalo
+
+        // Función que inicia el temporizador
+        function iniciarTemporizador() {
+            // Si el temporizador ya está corriendo, evitar múltiples llamadas
+            if (intervalo) return;
+
+            // Mostrar alerta si el tiempo se agota
+            document.getElementById('alerta').style.display = 'none';
+
+            // Iniciar un intervalo que disminuya el tiempo cada segundo (1000 ms)
+            intervalo = setInterval(() => {
+                // Restar uno al tiempo
+                tiempo--;
+                document.getElementById('contador').textContent = tiempo;
+
+                // Si el tiempo llega a cero, detener el temporizador
+                if (tiempo <= 0) {
+                    clearInterval(intervalo);  // Detiene el intervalo
+                    document.getElementById('alerta').textContent = '¡Tiempo agotado!'; // Muestra mensaje
+                    document.getElementById('alerta').style.display = 'block'; // Muestra alerta
+                }
+            }, 1000); // Ejecutar cada segundo
+        }
+    </script>
+
+</body>
+</html>
